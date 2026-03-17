@@ -179,22 +179,37 @@
     </footer>
   </div>
 
-  <script>
-    function calculateReorderPoint() {
-      const dailyDemand = parseFloat(document.getElementById('dailyDemand').value);
-      const leadTime = parseFloat(document.getElementById('leadTime').value);
-      const safetyStock = parseFloat(document.getElementById('safetyStock').value);
-      const resultBox = document.getElementById('reorderResult');
+<script>
+  function calculateReorderPoint() {
+    const dailyDemand = parseFloat(document.getElementById('dailyDemand').value);
+    const leadTime = parseFloat(document.getElementById('leadTime').value);
+    const safetyStock = parseFloat(document.getElementById('safetyStock').value);
+    const resultBox = document.getElementById('reorderResult');
 
-      if (isNaN(dailyDemand) || isNaN(leadTime) || isNaN(safetyStock)) {
-        resultBox.textContent = 'Please enter valid numbers in all fields.';
-        return;
-      }
-
-      const reorderPoint = (dailyDemand * leadTime) + safetyStock;
-      resultBox.textContent = `Reorder point: ${reorderPoint.toFixed(2)} units`;
+    if (isNaN(dailyDemand) || isNaN(leadTime) || isNaN(safetyStock)) {
+      resultBox.textContent = 'Please enter valid numbers in all fields.';
+      return;
     }
-  </script>
+
+    const reorderPoint = (dailyDemand * leadTime) + safetyStock;
+    resultBox.textContent = `Reorder point: ${reorderPoint.toFixed(2)} units`;
+  }
+
+  function calculateEOQ() {
+    const demand = parseFloat(document.getElementById('annualDemand').value);
+    const orderCost = parseFloat(document.getElementById('orderCost').value);
+    const holdingCost = parseFloat(document.getElementById('holdingCost').value);
+    const resultBox = document.getElementById('eoqResult');
+
+    if (isNaN(demand) || isNaN(orderCost) || isNaN(holdingCost)) {
+      resultBox.textContent = 'Please enter valid numbers in all fields.';
+      return;
+    }
+
+    const eoq = Math.sqrt((2 * demand * orderCost) / holdingCost);
+    resultBox.textContent = `EOQ: ${eoq.toFixed(2)} units`;
+  }
+</script>
   <div class="card">
   <h2>EOQ Calculator</h2>
   <p>
