@@ -178,6 +178,9 @@
       <p>© 2026 Inventory Calculators</p>
     </footer>
   </div>
+<div class="card">
+  <!-- jouw EOQ calculator -->
+</div>
 
 <script>
   function calculateReorderPoint() {
@@ -210,25 +213,5 @@
     resultBox.textContent = `EOQ: ${eoq.toFixed(2)} units`;
   }
 </script>
-  <div class="card">
-  <h2>EOQ Calculator</h2>
-  <p>
-    The Economic Order Quantity helps you calculate the optimal order size
-    to minimize ordering and holding costs.
-  </p>
-
-  <label for="annualDemand">Annual demand</label>
-  <input type="number" id="annualDemand" placeholder="e.g. 5000" />
-
-  <label for="orderCost">Order cost per order</label>
-  <input type="number" id="orderCost" placeholder="e.g. 45" />
-
-  <label for="holdingCost">Holding cost per unit per year</label>
-  <input type="number" id="holdingCost" placeholder="e.g. 6" />
-
-  <button onclick="calculateEOQ()">Calculate</button>
-
-  <div class="result" id="eoqResult">EOQ: —</div>
-</div>
 </body>
 </html>
