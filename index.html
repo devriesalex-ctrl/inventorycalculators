@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reorder Point Calculator | Inventory Calculators</title>
-  <meta name="description" content="Free reorder point calculator to determine when to restock inventory. Calculate reorder levels based on demand, lead time and safety stock." />
+  <title>Inventory Calculators</title>
+
   <style>
     :root {
       --bg: #f7f8fa;
@@ -14,221 +14,184 @@
       --border: #e5e7eb;
       --accent: #111827;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
     }
+
     .container {
-      max-width: 960px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 24px;
     }
+
     header {
-      padding: 28px 0 16px;
+      margin-bottom: 20px;
     }
-    h1, h2, h3 { margin: 0 0 12px; }
-    p { margin: 0 0 14px; color: var(--muted); }
+
+    h1, h2 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
     .hero {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 28px;
-      margin-bottom: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
     }
+
     .grid {
       display: grid;
       gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
+
     .card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 22px;
+      padding: 20px;
     }
+
     label {
       display: block;
-      font-weight: 700;
-      margin: 12px 0 6px;
-      color: var(--text);
+      margin-top: 12px;
+      font-weight: bold;
     }
+
     input {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 16px;
     }
+
     button {
-      margin-top: 16px;
-      padding: 12px 16px;
+      margin-top: 15px;
+      padding: 10px 15px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       background: var(--accent);
       color: white;
-      font-size: 16px;
       cursor: pointer;
     }
+
     .result {
-      margin-top: 16px;
-      padding: 14px;
-      background: #f3f4f6;
-      border-radius: 10px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .formula {
-      font-family: monospace;
-      background: #f9fafb;
-      border: 1px solid var(--border);
+      margin-top: 15px;
       padding: 12px;
-      border-radius: 10px;
-      color: var(--text);
-      display: inline-block;
+      background: #f3f4f6;
+      border-radius: 8px;
+      font-weight: bold;
     }
-    .nav {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-    .nav a {
-      text-decoration: none;
-      color: var(--text);
-      border: 1px solid var(--border);
-      background: var(--card);
-      padding: 10px 14px;
-      border-radius: 999px;
-    }
+
     footer {
-      padding: 28px 0 12px;
+      margin-top: 40px;
       color: var(--muted);
-      font-size: 14px;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
+
     <header>
       <h1>Inventory Calculators</h1>
-      <p>Simple tools to help you manage stock, reorder levels, and inventory decisions.</p>
-      <div class="nav">
-        <a href="#reorder-point">Reorder Point Calculator</a>
-        <a href="#coming-soon">More Calculators</a>
-      </div>
+      <p>Simple tools to help you manage stock and inventory decisions.</p>
     </header>
 
     <section class="hero">
-      <h2>Free Inventory Calculation Tools</h2>
-      <p>
-        Use these calculators to make smarter inventory decisions. Start with the reorder point calculator below.
-      </p>
+      <h2>Free Inventory Tools</h2>
+      <p>Use these calculators to improve your stock management.</p>
     </section>
 
-    <section id="reorder-point" class="grid">
+    <section class="grid">
+
+      <!-- REORDER POINT -->
       <div class="card">
         <h2>Reorder Point Calculator</h2>
-        <p>
-          The reorder point tells you when to place a new order so you do not run out of stock. Enter your average daily demand,
-          supplier lead time, and safety stock.
-        </p>
 
-        <label for="dailyDemand">Average daily demand</label>
-        <input id="dailyDemand" type="number" min="0" step="any" placeholder="e.g. 20" />
+        <label>Average daily demand</label>
+        <input id="dailyDemand" type="number" placeholder="e.g. 20">
 
-        <label for="leadTime">Lead time (days)</label>
-        <input id="leadTime" type="number" min="0" step="any" placeholder="e.g. 10" />
+        <label>Lead time (days)</label>
+        <input id="leadTime" type="number" placeholder="e.g. 10">
 
-        <label for="safetyStock">Safety stock</label>
-        <input id="safetyStock" type="number" min="0" step="any" placeholder="e.g. 50" />
+        <label>Safety stock</label>
+        <input id="safetyStock" type="number" placeholder="e.g. 50">
 
         <button onclick="calculateReorderPoint()">Calculate</button>
 
         <div id="reorderResult" class="result">Reorder point: —</div>
       </div>
 
+      <!-- EOQ -->
       <div class="card">
-        <h3>Formula</h3>
-        <div class="formula">Reorder Point = (Daily Demand × Lead Time) + Safety Stock</div>
+        <h2>EOQ Calculator</h2>
 
-        <h3 style="margin-top:20px;">Example</h3>
-        <p>
-          If you sell 20 units per day, your lead time is 10 days, and you keep 50 units as safety stock:
-        </p>
-        <div class="formula">(20 × 10) + 50 = 250 units</div>
+        <label>Annual demand</label>
+        <input id="annualDemand" type="number" placeholder="e.g. 5000">
+
+        <label>Order cost per order</label>
+        <input id="orderCost" type="number" placeholder="e.g. 45">
+
+        <label>Holding cost per unit per year</label>
+        <input id="holdingCost" type="number" placeholder="e.g. 6">
+
+        <button onclick="calculateEOQ()">Calculate</button>
+
+        <div id="eoqResult" class="result">EOQ: —</div>
       </div>
-    </section>
 
-    <section id="coming-soon" class="card" style="margin-top: 24px;">
-      <h2>More calculators coming soon</h2>
-      <p>Possible next tools:</p>
-      <ul>
-        <li>Safety Stock Calculator</li>
-        <li>EOQ Calculator</li>
-        <li>Inventory Turnover Calculator</li>
-        <li>Dead Stock Calculator</li>
-      </ul>
     </section>
 
     <footer>
       <p>© 2026 Inventory Calculators</p>
     </footer>
+
   </div>
-<div class="card">
-  <h2>EOQ Calculator</h2>
-  <p>
-    The Economic Order Quantity helps you calculate the optimal order size
-    to minimize ordering and holding costs.
-  </p>
 
-  <label for="annualDemand">Annual demand</label>
-  <input type="number" id="annualDemand" placeholder="e.g. 5000" />
+  <script>
+    function calculateReorderPoint() {
+      const dailyDemand = parseFloat(document.getElementById('dailyDemand').value);
+      const leadTime = parseFloat(document.getElementById('leadTime').value);
+      const safetyStock = parseFloat(document.getElementById('safetyStock').value);
 
-  <label for="orderCost">Order cost per order</label>
-  <input type="number" id="orderCost" placeholder="e.g. 45" />
+      if (isNaN(dailyDemand) || isNaN(leadTime) || isNaN(safetyStock)) {
+        document.getElementById('reorderResult').textContent = 'Enter valid numbers';
+        return;
+      }
 
-  <label for="holdingCost">Holding cost per unit per year</label>
-  <input type="number" id="holdingCost" placeholder="e.g. 6" />
-
-  <button onclick="calculateEOQ()">Calculate</button>
-
-  <div class="result" id="eoqResult">EOQ: —</div>
-</div>
-
-<script>
-  function calculateReorderPoint() {
-    const dailyDemand = parseFloat(document.getElementById('dailyDemand').value);
-    const leadTime = parseFloat(document.getElementById('leadTime').value);
-    const safetyStock = parseFloat(document.getElementById('safetyStock').value);
-    const resultBox = document.getElementById('reorderResult');
-
-    if (isNaN(dailyDemand) || isNaN(leadTime) || isNaN(safetyStock)) {
-      resultBox.textContent = 'Please enter valid numbers in all fields.';
-      return;
+      const result = (dailyDemand * leadTime) + safetyStock;
+      document.getElementById('reorderResult').textContent =
+        `Reorder point: ${result.toFixed(2)} units`;
     }
 
-    const reorderPoint = (dailyDemand * leadTime) + safetyStock;
-    resultBox.textContent = `Reorder point: ${reorderPoint.toFixed(2)} units`;
-  }
+    function calculateEOQ() {
+      const demand = parseFloat(document.getElementById('annualDemand').value);
+      const orderCost = parseFloat(document.getElementById('orderCost').value);
+      const holdingCost = parseFloat(document.getElementById('holdingCost').value);
 
-  function calculateEOQ() {
-    const demand = parseFloat(document.getElementById('annualDemand').value);
-    const orderCost = parseFloat(document.getElementById('orderCost').value);
-    const holdingCost = parseFloat(document.getElementById('holdingCost').value);
-    const resultBox = document.getElementById('eoqResult');
+      if (isNaN(demand) || isNaN(orderCost) || isNaN(holdingCost)) {
+        document.getElementById('eoqResult').textContent = 'Enter valid numbers';
+        return;
+      }
 
-    if (isNaN(demand) || isNaN(orderCost) || isNaN(holdingCost)) {
-      resultBox.textContent = 'Please enter valid numbers in all fields.';
-      return;
+      const eoq = Math.sqrt((2 * demand * orderCost) / holdingCost);
+      document.getElementById('eoqResult').textContent =
+        `EOQ: ${eoq.toFixed(2)} units`;
     }
+  </script>
 
-    const eoq = Math.sqrt((2 * demand * orderCost) / holdingCost);
-    resultBox.textContent = `EOQ: ${eoq.toFixed(2)} units`;
-  }
-</script>
 </body>
 </html>
