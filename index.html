@@ -1,181 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inventory Calculators</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory Calculators</title>
 
-  <style>
-    :root {
-      --bg: #f7f8fa;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --accent: #111827;
-      --soft: #f3f4f6;
-    }
+<style>
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg,#0b1020,#0f1730);
+  color:white;
+}
 
-    * { box-sizing: border-box; }
+.container {
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
+h1 {font-size:40px;}
+p {color:#9fb0d4;}
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 24px;
-    }
+.hero {
+  padding:30px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
+  margin-bottom:20px;
+}
 
-    h1, h2, h3 { margin-bottom: 10px; }
-    p { color: var(--muted); }
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
 
-    .hero, .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
+.card {
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
+}
 
-    .grid {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    }
+input {
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border-radius:10px;
+  border:none;
+}
 
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
+button {
+  margin-top:10px;
+  padding:10px;
+  width:100%;
+  border:none;
+  border-radius:10px;
+  background:#4ef2c2;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
+.result {
+  margin-top:10px;
+  padding:10px;
+  background:rgba(255,255,255,0.1);
+  border-radius:10px;
+}
 
-    button {
-      margin-top: 12px;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      background: var(--accent);
-      color: white;
-      cursor: pointer;
-    }
-
-    .result {
-      margin-top: 12px;
-      padding: 10px;
-      background: var(--soft);
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    footer {
-      margin-top: 40px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-  </style>
+.note {
+  margin-top:10px;
+  font-size:13px;
+  color:#9fb0d4;
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
+<div class="container">
 
-    <h1>Inventory Calculators</h1>
-    <p>Simple tools to help you manage stock and inventory decisions.</p>
+<h1>Inventory Calculators</h1>
+<p>Built from real warehouse experience — not theory.</p>
 
-    <div class="hero">
-      <h2>Free Inventory Tools</h2>
-      <p>Use these calculators to improve your inventory management.</p>
-    </div>
+<div class="hero">
+<h2>Tools I actually use in operations</h2>
+<p>These calculators are designed for real warehouse decisions, not textbook examples.</p>
+</div>
 
-    <div class="grid">
+<div class="grid">
 
-      <!-- REORDER -->
-      <div class="card">
-        <h2>Reorder Point Calculator</h2>
+<div class="card">
+<h2>Reorder Point</h2>
 
-        <label>Daily demand</label>
-        <input id="dailyDemand" type="number" placeholder="e.g. 20">
+<label>Daily demand</label>
+<input id="demand">
 
-        <label>Lead time (days)</label>
-        <input id="leadTime" type="number" placeholder="e.g. 10">
+<label>Lead time</label>
+<input id="lead">
 
-        <label>Safety stock</label>
-        <input id="safetyStock" type="number" placeholder="e.g. 50">
+<label>Safety stock</label>
+<input id="stock">
 
-        <button onclick="calculateReorder()">Calculate</button>
+<button onclick="reorder()">Calculate reorder point</button>
 
-        <div id="reorderResult" class="result">Reorder point: —</div>
-      </div>
+<div id="r" class="result">Result: —</div>
 
-      <!-- EOQ -->
-      <div class="card">
-        <h2>EOQ Calculator</h2>
+<div class="note">
+Used when demand is stable and lead times are predictable.
+</div>
+</div>
 
-        <label>Annual demand</label>
-        <input id="annualDemand" type="number" placeholder="e.g. 5000">
+<div class="card">
+<h2>EOQ</h2>
 
-        <label>Order cost</label>
-        <input id="orderCost" type="number" placeholder="e.g. 45">
+<label>Annual demand</label>
+<input id="ad">
 
-        <label>Holding cost</label>
-        <input id="holdingCost" type="number" placeholder="e.g. 6">
+<label>Order cost</label>
+<input id="oc">
 
-        <button onclick="calculateEOQ()">Calculate</button>
+<label>Holding cost</label>
+<input id="hc">
 
-        <div id="eoqResult" class="result">EOQ: —</div>
-      </div>
+<button onclick="eoq()">Calculate EOQ</button>
 
-    </div>
+<div id="e" class="result">Result: —</div>
 
-    <footer>
-      <p>© 2026 Inventory Calculators</p>
-    </footer>
+<div class="note">
+Best used for cost optimization scenarios with stable demand.
+</div>
+</div>
 
-  </div>
+</div>
 
-  <script>
-    function calculateReorder() {
-      let d = parseFloat(document.getElementById("dailyDemand").value);
-      let l = parseFloat(document.getElementById("leadTime").value);
-      let s = parseFloat(document.getElementById("safetyStock").value);
+</div>
 
-      if (isNaN(d) || isNaN(l) || isNaN(s)) {
-        document.getElementById("reorderResult").textContent = "Enter valid numbers";
-        return;
-      }
+<script>
+function reorder(){
+let d=parseFloat(demand.value);
+let l=parseFloat(lead.value);
+let s=parseFloat(stock.value);
 
-      let result = (d * l) + s;
-      document.getElementById("reorderResult").textContent =
-        "Reorder point: " + result.toFixed(2);
-    }
+if(isNaN(d)||isNaN(l)||isNaN(s)){
+r.innerHTML="Enter valid numbers";
+return;
+}
 
-    function calculateEOQ() {
-      let d = parseFloat(document.getElementById("annualDemand").value);
-      let o = parseFloat(document.getElementById("orderCost").value);
-      let h = parseFloat(document.getElementById("holdingCost").value);
+r.innerHTML="Reorder point: "+(d*l+s).toFixed(2);
+}
 
-      if (isNaN(d) || isNaN(o) || isNaN(h) || h === 0) {
-        document.getElementById("eoqResult").textContent = "Enter valid numbers";
-        return;
-      }
+function eoq(){
+let d=parseFloat(ad.value);
+let o=parseFloat(oc.value);
+let h=parseFloat(hc.value);
 
-      let eoq = Math.sqrt((2 * d * o) / h);
-      document.getElementById("eoqResult").textContent =
-        "EOQ: " + eoq.toFixed(2);
-    }
-  </script>
+if(isNaN(d)||isNaN(o)||isNaN(h)||h===0){
+e.innerHTML="Enter valid numbers";
+return;
+}
+
+e.innerHTML="EOQ: "+Math.sqrt((2*d*o)/h).toFixed(2);
+}
+</script>
 
 </body>
 </html>
