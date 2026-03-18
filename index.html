@@ -88,7 +88,44 @@ button {
 </div>
 
 <div class="grid">
+<div class="card">
+  <h2>Warehouse Capacity</h2>
 
+  <label>Warehouse length (meters)</label>
+  <input id="wl" placeholder="e.g. 100">
+
+  <label>Warehouse width (meters)</label>
+  <input id="ww" placeholder="e.g. 50">
+
+  <label>Non-storage area (%)</label>
+  <input id="ns" placeholder="e.g. 40">
+
+  <label>Pallet type</label>
+  <select id="ptype">
+    <option value="0.96">Euro pallet (1200 x 800)</option>
+    <option value="1.2">Block pallet (1200 x 1000)</option>
+    <option value="custom">Custom size</option>
+  </select>
+
+  <div id="customSize" style="display:none;">
+    <label>Pallet length (m)</label>
+    <input id="pl">
+
+    <label>Pallet width (m)</label>
+    <input id="pw">
+  </div>
+
+  <label>Stacking levels</label>
+  <input id="levels" placeholder="e.g. 2">
+
+  <button onclick="capacity()">Calculate capacity</button>
+
+  <div id="capResult" class="result">Result: —</div>
+
+  <div class="note">
+    Based on usable warehouse space and pallet footprint.
+  </div>
+</div>
 <div class="card">
 <h2>Reorder Point</h2>
 
