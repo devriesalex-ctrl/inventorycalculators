@@ -198,6 +198,63 @@ return;
 
 e.innerHTML="EOQ: "+Math.sqrt((2*d*o)/h).toFixed(2);
 }
+  function capacity() {
+  let length = parseFloat(document.getElementById("wl").value);
+  let width = parseFloat(document.getElementById("ww").value);
+  let nonStorage = parseFloat(document.getElementById("ns").value);
+  let palletType = document.getElementById("ptype").value;
+  let levels = parseFloat(document.getElementById("levels").value);
+  let palletArea;
+
+  if (palletType === "custom") {
+    let palletLength = parseFloat(document.getElementById("pl").value);
+    let palletWidth = parseFloat(document.getElementById("pw").value);
+
+    if (isNaN(palletLength) || isNaN(palletWidth) || palletLength <= 0 || palletWidth <= 0) {
+      document.getElementById("capResult").textContent = "Enter valid custom pallet dimensions.";
+      return;
+    }
+
+    palletArea = palletLength * palletWidth;
+  } else {
+    palletArea = parseFloat(palletType);
+  }
+
+  if (
+    isNaN(length) ||
+    isNaN(width) ||
+    isNaN(nonStorage) ||
+    isNaN(levels) ||
+    length <= 0 ||
+    width <= 0 ||
+    levels <= 0 ||
+    nonStorage < 0 ||
+    nonStorage >= 100
+  ) {
+    document.getElementById("capResult").textContent = "Enter valid numbers in all fields.";
+    return;
+  }
+
+  let warehouseArea = length * width;
+  let usableArea = warehouseArea * (1 - nonStorage / 100);
+  let floorPositions = Math.floor(usableArea / palletArea);
+  let totalCapacity = Math.floor(floorPositions * levels);
+
+  document.getElementById("capResult").innerHTML =
+    "Warehouse area: " + warehouseArea.toFixed(2) + " m²<br>" +
+    "Usable storage area: " + usableArea.toFixed(2) + " m²<br>" +
+    "Pallet footprint: " + palletArea.toFixed(2) + " m²<br>" +
+    "Estimated capacity: " + totalCapacity + " pallet positions";
+}
+
+document.getElementById("ptype").addEventListener("change", function () {
+  const customBox = document.getElementById("customSize");
+  if (this.value === "custom") {
+    customBox.style.display = "block";
+  } else {
+    customBox.style.display = "none";
+  }
+});
 </script>
 
 </body>
