@@ -173,32 +173,36 @@ Best used for cost optimization scenarios with stable demand.
 </div>
 
 <script>
+<script>
 function reorder(){
-let d=parseFloat(demand.value);
-let l=parseFloat(lead.value);
-let s=parseFloat(stock.value);
+  let d = parseFloat(document.getElementById("demand").value);
+  let l = parseFloat(document.getElementById("lead").value);
+  let s = parseFloat(document.getElementById("stock").value);
 
-if(isNaN(d)||isNaN(l)||isNaN(s)){
-r.innerHTML="Enter valid numbers";
-return;
-}
+  if (isNaN(d) || isNaN(l) || isNaN(s)) {
+    document.getElementById("r").innerHTML = "Enter valid numbers";
+    return;
+  }
 
-r.innerHTML="Reorder point: "+(d*l+s).toFixed(2);
+  document.getElementById("r").innerHTML =
+    "Reorder point: " + (d * l + s).toFixed(2);
 }
 
 function eoq(){
-let d=parseFloat(ad.value);
-let o=parseFloat(oc.value);
-let h=parseFloat(hc.value);
+  let d = parseFloat(document.getElementById("ad").value);
+  let o = parseFloat(document.getElementById("oc").value);
+  let h = parseFloat(document.getElementById("hc").value);
 
-if(isNaN(d)||isNaN(o)||isNaN(h)||h===0){
-e.innerHTML="Enter valid numbers";
-return;
+  if (isNaN(d) || isNaN(o) || isNaN(h) || h === 0) {
+    document.getElementById("e").innerHTML = "Enter valid numbers";
+    return;
+  }
+
+  document.getElementById("e").innerHTML =
+    "EOQ: " + Math.sqrt((2 * d * o) / h).toFixed(2);
 }
 
-e.innerHTML="EOQ: "+Math.sqrt((2*d*o)/h).toFixed(2);
-}
-  function capacity() {
+function capacity() {
   let length = parseFloat(document.getElementById("wl").value);
   let width = parseFloat(document.getElementById("ww").value);
   let nonStorage = parseFloat(document.getElementById("ns").value);
@@ -211,7 +215,7 @@ e.innerHTML="EOQ: "+Math.sqrt((2*d*o)/h).toFixed(2);
     let palletWidth = parseFloat(document.getElementById("pw").value);
 
     if (isNaN(palletLength) || isNaN(palletWidth) || palletLength <= 0 || palletWidth <= 0) {
-      document.getElementById("capResult").textContent = "Enter valid custom pallet dimensions.";
+      document.getElementById("capResult").innerHTML = "Enter valid custom pallet dimensions";
       return;
     }
 
@@ -231,7 +235,7 @@ e.innerHTML="EOQ: "+Math.sqrt((2*d*o)/h).toFixed(2);
     nonStorage < 0 ||
     nonStorage >= 100
   ) {
-    document.getElementById("capResult").textContent = "Enter valid numbers in all fields.";
+    document.getElementById("capResult").innerHTML = "Enter valid numbers";
     return;
   }
 
@@ -247,14 +251,21 @@ e.innerHTML="EOQ: "+Math.sqrt((2*d*o)/h).toFixed(2);
     "Estimated capacity: " + totalCapacity + " pallet positions";
 }
 
-document.getElementById("ptype").addEventListener("change", function () {
+document.addEventListener("DOMContentLoaded", function () {
+  const palletSelect = document.getElementById("ptype");
   const customBox = document.getElementById("customSize");
-  if (this.value === "custom") {
-    customBox.style.display = "block";
-  } else {
-    customBox.style.display = "none";
+
+  if (palletSelect && customBox) {
+    palletSelect.addEventListener("change", function () {
+      if (this.value === "custom") {
+        customBox.style.display = "block";
+      } else {
+        customBox.style.display = "none";
+      }
+    });
   }
 });
+</script>
 </script>
 
 </body>
